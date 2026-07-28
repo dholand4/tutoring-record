@@ -1,0 +1,51 @@
+name: Cadastro Automático de Tutorias
+
+on:
+  schedule:
+    # Segunda e Sexta: fim às 19:00 BRT → roda às 18:50 BRT (21:50 UTC)
+    - cron: '50 21 * * 1,5'
+    # Terça, Quarta e Quinta: fim às 17:30 BRT → roda às 17:20 BRT (20:20 UTC)
+    - cron: '20 20 * * 2,3,4'
+    # Sábado: fim às 12:00 BRT → roda às 11:50 BRT (14:50 UTC)
+    - cron: '50 14 * * 6'
+  workflow_dispatch: # permite execução manual pelo GitHub
+
+jobs:
+  cadastrar-tutorias:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar navegadores do Playwright
+        run: npx playwright install chromium --with-deps
+
+      - name: Executar cadastro de tutorias
+        env:
+          MOODLE_USUARIO: ${{ secrets.MOODLE_USUARIO }}
+          MOODLE_SENHA: ${{ secrets.MOODLE_SENHA }}
+          AVA_SENHA: ${{ secrets.AVA_SENHA }}
+          AVA_USER_ID: ${{ secrets.AVA_USER_ID }}
+          ATIVIDADES_URL: ${{ secrets.ATIVIDADES_URL }}
+          HEADLESS: 'true'
+          PERIODO_INICIO: ${{ vars.PERIODO_INICIO }}
+          PERIODO_FIM: ${{ vars.PERIODO_FIM }}
+        run: npm start
+
+      - name: Salvar logs em caso de falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-diagnostico
+          path: logs/
+          retention-days: 7
