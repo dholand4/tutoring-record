@@ -1,0 +1,1 @@
+0 15 * * * cd /app && node src/main.js >> /app/logs/cron.log 2>&1
