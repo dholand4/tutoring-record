@@ -1,0 +1,16 @@
+{
+  "name": "automacao-tutorias",
+  "version": "1.0.0",
+  "description": "Agente de automação para cadastro de tutorias",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "test-run": "node src/main.js --dry-run",
+    "debug": "node --inspect src/main.js",
+    "validate": "node src/main.js --validate-only"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0",
+    "dotenv": "^16.4.5"
+  }
+}
