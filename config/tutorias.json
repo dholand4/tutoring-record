@@ -1,0 +1,87 @@
+{
+  "urlMoodle": "https://ava.unicatolicaquixada.edu.br/portal3/login/index.php",
+  "url": "https://ava.unicatolicaquixada.edu.br/webapp/sistutoria/view/tutorias.php",
+  "modoTeste": false,
+  "modoHoje": true,
+  "pularSeJaExistir": true,
+  "tempoEntreCadastrosMs": 1500,
+  "tutor": "DANIEL HOLANDA",
+  "registros": [
+    {
+      "diaSemana": "segunda-feira",
+      "horarioInicial": "09:00",
+      "horarioFinal": "19:00",
+      "atividades": [
+        "Verifiquei e respondi mensagens dos alunos (AVA, e-mail e WhatsApp)",
+        "Conferir material didático (Engenharia de Software, Segurança e Auditoria de SI)",
+        "Conferir o vídeo (Engenharia de Software, Segurança e Auditoria de SI)",
+        "Cadastrar aula na frequência (Engenharia de Software, Segurança e Auditoria de SI)",
+        "Notificar alunos sobre abertura das aulas (Engenharia de Software, Segurança e Auditoria de SI)"
+      ],
+      "observacao": ""
+    },
+    {
+      "diaSemana": "terça-feira",
+      "horarioInicial": "09:00",
+      "horarioFinal": "17:30",
+      "atividades": [
+        "Verifiquei e respondi mensagens dos alunos (AVA, e-mail e WhatsApp)",
+        "Registrar frequência da semana anterior (Engenharia de Software, Segurança e Auditoria de SI)",
+        "Conferir material didático (Inteligência Artificial)",
+        "Conferir o vídeo (Inteligência Artificial)",
+        "Cadastrar aula na frequência (Inteligência Artificial)",
+        "Notificar alunos sobre abertura da aula (Inteligência Artificial)"
+      ],
+      "observacao": ""
+    },
+    {
+      "diaSemana": "quarta-feira",
+      "horarioInicial": "09:00",
+      "horarioFinal": "17:30",
+      "atividades": [
+        "Verifiquei e respondi mensagens dos alunos (AVA, e-mail e WhatsApp)",
+        "Registrar frequência da semana anterior (Inteligência Artificial)",
+        "Conferir material didático (Gestão de Tecnologia da Informação)",
+        "Conferir o vídeo (Gestão de Tecnologia da Informação)",
+        "Cadastrar aula na frequência (Gestão de Tecnologia da Informação)",
+        "Notificar alunos sobre abertura da aula (Gestão de Tecnologia da Informação)"
+      ],
+      "observacao": ""
+    },
+    {
+      "diaSemana": "quinta-feira",
+      "horarioInicial": "09:00",
+      "horarioFinal": "17:30",
+      "atividades": [
+        "Verifiquei e respondi mensagens dos alunos (AVA, e-mail e WhatsApp)",
+        "Registrar frequência da semana anterior (Gestão de Tecnologia da Informação)",
+        "Conferir material didático (Design de SI, Fundamentos de Banco de Dados, Gestão de Carreira)",
+        "Conferir o vídeo (Design de SI, Fundamentos de Banco de Dados, Gestão de Carreira)",
+        "Cadastrar aula na frequência (Design de SI, Fundamentos de Banco de Dados, Gestão de Carreira)",
+        "Notificar alunos sobre abertura das aulas (Design de SI, Fundamentos de Banco de Dados, Gestão de Carreira)"
+      ],
+      "observacao": ""
+    },
+    {
+      "diaSemana": "sexta-feira",
+      "horarioInicial": "08:00",
+      "horarioFinal": "19:00",
+      "atividades": [
+        "Verifiquei e respondi mensagens dos alunos (AVA, e-mail e WhatsApp)",
+        "Registrar frequência da semana anterior (Design de SI, Fundamentos de Banco de Dados, Gestão de Carreira)",
+        "Alinhamento com Professores Formadores",
+        "Estudo e alinhamento de novas tecnologias e ferramentas para mediação"
+      ],
+      "observacao": ""
+    },
+    {
+      "diaSemana": "sábado",
+      "horarioInicial": "09:00",
+      "horarioFinal": "12:00",
+      "atividades": [
+        "Verifiquei e respondi mensagens dos alunos (AVA, e-mail e WhatsApp)"
+      ],
+      "observacao": ""
+    }
+  ]
+}
