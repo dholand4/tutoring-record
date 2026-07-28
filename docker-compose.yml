@@ -1,0 +1,12 @@
+services:
+  tutoring-record:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - HEADLESS=true
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config
+    shm_size: "1gb"
