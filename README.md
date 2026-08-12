@@ -183,6 +183,19 @@ O container só executa nos horários agendados. Para disparar uma execução na
 
 > **GitHub Actions não iniciou o job?** Se aparecer *"The job was not started because recent account payments have failed or your spending limit needs to be increased"*, o problema é de cobrança da conta, não do código — em repositório **privado** cada execução consome minutos pagos. Como este repositório é **público**, os runners padrão são gratuitos e o bloqueio não se aplica; se voltar a acontecer, é sinal de que a visibilidade mudou. Nesse caso, regularize em **Settings → Billing & plans** ou deixe a VPS como agendador principal.
 
+Para o workflow rodar sozinho, configure em **Settings → Secrets and variables → Actions**:
+
+| Nome | Tipo | Obrigatório |
+|---|---|---|
+| `MOODLE_USUARIO` | Secret | Sim — sem ele o bot cai no login manual |
+| `MOODLE_SENHA` | Secret | Sim — sem ele o bot cai no login manual |
+| `AVA_USER_ID` | Secret | Sim — usado na tela de verificação do AVA |
+| `AVA_SENHA` | Secret | Só se a senha do AVA for diferente da do Moodle |
+| `ATIVIDADES_URL` | Secret | Sim — sem ele as atividades vêm do JSON, sem os extras da semana |
+| `PERIODO_INICIO` / `PERIODO_FIM` | Variable | Opcional — limita o intervalo de execução |
+
+> **Job travado em "Run npm start"?** Se o log parar em *"Credenciais não encontradas no .env. Usando login manual..."*, é porque `MOODLE_USUARIO`/`MOODLE_SENHA` não chegaram ao runner. Sem credenciais o bot pede ENTER no terminal — coisa que ninguém responde no CI. Configure os secrets acima e rode de novo em **Actions → Run workflow**.
+
 > **Repositório público — dois cuidados com o Actions:**
 > - Os **artefatos de execução são baixáveis por qualquer pessoa**. Por isso o workflow sobe apenas `logs/*.log` em caso de falha — nunca `logs/session.json` (cookies autenticados do AVA), screenshots ou os dumps HTML de diagnóstico.
 > - Workflows agendados são **desativados automaticamente após 60 dias sem atividade** no repositório. O GitHub avisa por e-mail e basta reativar em **Actions**; a VPS não sofre disso.

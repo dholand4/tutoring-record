@@ -51,6 +51,15 @@ const SELETORES_BTN_VOLTAR = [
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
+/**
+ * Há alguém no terminal para responder a um prompt?
+ * Falso no GitHub Actions, no cron do container e em qualquer stdin redirecionado.
+ */
+function ambienteInterativo() {
+  if (process.env.CI) return false;
+  return Boolean(process.stdin.isTTY);
+}
+
 /** Aguarda o usuário pressionar ENTER no terminal. */
 function aguardarEnter(mensagem) {
   return new Promise((resolve) => {
@@ -231,6 +240,20 @@ class TutoriaBot {
     }
 
     // ── Tentativa 3: login manual (sem credenciais no .env) ───────────────
+    // Só faz sentido com alguém na frente do terminal. Em CI/cron o prompt de
+    // ENTER nunca é respondido e a execução ficaria pendurada até o timeout.
+    if (!ambienteInterativo()) {
+      const faltando = [
+        !usuario && 'MOODLE_USUARIO',
+        !senhaMoodle && 'MOODLE_SENHA',
+      ].filter(Boolean).join(', ');
+      throw new Error(
+        `Credenciais ausentes (${faltando}) e ambiente não interativo — o login manual exige ENTER no terminal. ` +
+        'No GitHub Actions configure os secrets em Settings → Secrets and variables → Actions; ' +
+        'na VPS preencha o arquivo .env.'
+      );
+    }
+
     logger.info('Credenciais não encontradas no .env. Usando login manual...');
     await this._loginManual();
   }

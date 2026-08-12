@@ -16,6 +16,7 @@ permissions:
 jobs:
   cadastrar-tutorias:
     runs-on: ubuntu-latest
+    timeout-minutes: 15 # rede de segurança: sem isso um job travado roda por 6h
 
     steps:
       - name: Checkout do repositório
