@@ -1,1 +1,16 @@
-0 15 * * * cd /app && node src/main.js >> /app/logs/cron.log 2>&1
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+CRON_TZ=America/Fortaleza
+
+# Mesmo agendamento do workflow do GitHub Actions, em horário de Fortaleza (UTC-3).
+# O arquivo /app/.cron-env é gerado pelo entrypoint.sh — o cron não herda as
+# variáveis de ambiente do container, por isso ele é carregado antes de cada execução.
+
+# Segunda e Sexta: expediente encerra 19:00 -> roda 18:50
+50 18 * * 1,5 . /app/.cron-env; cd /app && node src/main.js >> /app/logs/cron.log 2>&1
+
+# Terça, Quarta e Quinta: expediente encerra 17:30 -> roda 17:20
+20 17 * * 2,3,4 . /app/.cron-env; cd /app && node src/main.js >> /app/logs/cron.log 2>&1
+
+# Sábado: expediente encerra 12:00 -> roda 11:50
+50 11 * * 6 . /app/.cron-env; cd /app && node src/main.js >> /app/logs/cron.log 2>&1
