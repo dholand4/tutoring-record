@@ -181,7 +181,11 @@ tail -f logs/cron.log
 
 O container só executa nos horários agendados. Para disparar uma execução na hora de subir (teste do setup), use `RUN_ON_START=true docker compose up -d`.
 
-> **GitHub Actions não iniciou o job?** Se aparecer *"The job was not started because recent account payments have failed or your spending limit needs to be increased"*, o problema é de cobrança da conta, não do código: como o repositório é privado, cada execução consome minutos pagos do Actions. Regularize em **Settings → Billing & plans** (forma de pagamento e limite de gastos) ou deixe a VPS como agendador principal. Enquanto isso, dá para rodar manualmente com `npm start` ou pela aba **Actions → Run workflow**.
+> **GitHub Actions não iniciou o job?** Se aparecer *"The job was not started because recent account payments have failed or your spending limit needs to be increased"*, o problema é de cobrança da conta, não do código — em repositório **privado** cada execução consome minutos pagos. Como este repositório é **público**, os runners padrão são gratuitos e o bloqueio não se aplica; se voltar a acontecer, é sinal de que a visibilidade mudou. Nesse caso, regularize em **Settings → Billing & plans** ou deixe a VPS como agendador principal.
+
+> **Repositório público — dois cuidados com o Actions:**
+> - Os **artefatos de execução são baixáveis por qualquer pessoa**. Por isso o workflow sobe apenas `logs/*.log` em caso de falha — nunca `logs/session.json` (cookies autenticados do AVA), screenshots ou os dumps HTML de diagnóstico.
+> - Workflows agendados são **desativados automaticamente após 60 dias sem atividade** no repositório. O GitHub avisa por e-mail e basta reativar em **Actions**; a VPS não sofre disso.
 
 ---
 

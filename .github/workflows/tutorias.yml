@@ -10,6 +10,9 @@ on:
     - cron: '50 14 * * 6'
   workflow_dispatch: # permite execução manual pelo GitHub
 
+permissions:
+  contents: read
+
 jobs:
   cadastrar-tutorias:
     runs-on: ubuntu-latest
@@ -42,10 +45,14 @@ jobs:
           PERIODO_FIM: ${{ vars.PERIODO_FIM }}
         run: npm start
 
-      - name: Salvar logs em caso de falha
+      # ATENÇÃO: em repositório público qualquer pessoa baixa os artefatos das
+      # execuções. Só sobe o log de texto — nunca logs/session.json (cookies do
+      # AVA autenticados), screenshots ou os dumps HTML de diagnóstico.
+      - name: Salvar log em caso de falha
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: logs-diagnostico
-          path: logs/
+          path: logs/*.log
           retention-days: 7
+          if-no-files-found: ignore
