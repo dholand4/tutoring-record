@@ -301,6 +301,12 @@ Crie um arquivo `.env` baseado no `.env.example`:
 MOODLE_USUARIO=sua_matricula
 MOODLE_SENHA=sua_senha_moodle
 
+# Senha da verificação do AVA — só se for diferente da senha do Moodle
+AVA_SENHA=
+
+# Seu ID no parâmetro "user" da URL user-verification.php?user=12345&course=382
+AVA_USER_ID=12345
+
 # true = sem janela (para VPS/servidor) | false = abre navegador visível (para testar)
 HEADLESS=false
 
@@ -316,6 +322,8 @@ PERIODO_FIM=2026-07-30
 |---|---|
 | `MOODLE_USUARIO` | Matrícula de acesso ao AVA |
 | `MOODLE_SENHA` | Senha do AVA |
+| `AVA_SENHA` | Senha da tela de verificação — só se for diferente da do Moodle |
+| `AVA_USER_ID` | Seu ID no parâmetro `user` da URL `user-verification.php?user=...` |
 | `HEADLESS` | `true` para rodar sem abrir janela do navegador |
 | `ATIVIDADES_URL` | URL do Apps Script — atividades, horários e dias da semana vêm da planilha |
 | `PERIODO_INICIO` | O bot não executa antes dessa data — útil para cron automático |
