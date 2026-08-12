@@ -158,6 +158,31 @@ npx playwright install chromium
 npm start
 ```
 
+### Agendamento automático
+
+O bot roda sozinho por dois caminhos, ambos com o mesmo horário (Seg/Sex 18:50, Ter/Qua/Qui 17:20, Sáb 11:50 — sempre 10 minutos antes do fim do expediente):
+
+| Onde | Arquivo | Quando usar |
+|---|---|---|
+| GitHub Actions | [`.github/workflows/tutorias.yml`](.github/workflows/tutorias.yml) | Sem infraestrutura própria |
+| VPS com Docker | [`crontab`](crontab) + [`docker-compose.yml`](docker-compose.yml) | Quando quiser controle total e sem custo de minutos |
+
+Para subir na VPS:
+
+```bash
+docker compose up -d --build
+```
+
+```bash
+# acompanhar as execuções
+docker compose logs -f
+tail -f logs/cron.log
+```
+
+O container só executa nos horários agendados. Para disparar uma execução na hora de subir (teste do setup), use `RUN_ON_START=true docker compose up -d`.
+
+> **GitHub Actions não iniciou o job?** Se aparecer *"The job was not started because recent account payments have failed or your spending limit needs to be increased"*, o problema é de cobrança da conta, não do código: como o repositório é privado, cada execução consome minutos pagos do Actions. Regularize em **Settings → Billing & plans** (forma de pagamento e limite de gastos) ou deixe a VPS como agendador principal. Enquanto isso, dá para rodar manualmente com `npm start` ou pela aba **Actions → Run workflow**.
+
 ---
 
 ## Configuração
