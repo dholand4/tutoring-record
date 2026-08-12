@@ -19,6 +19,36 @@ jobs:
     timeout-minutes: 15 # rede de segurança: sem isso um job travado roda por 6h
 
     steps:
+      # Diagnóstico: mostra em qual aba cada nome foi cadastrado e falha em 2s
+      # se faltar algum. Imprime só "OK" ou "vazio" — nunca o valor.
+      - name: Conferir secrets e variables
+        env:
+          S_MOODLE_USUARIO: ${{ secrets.MOODLE_USUARIO }}
+          V_MOODLE_USUARIO: ${{ vars.MOODLE_USUARIO }}
+          S_MOODLE_SENHA: ${{ secrets.MOODLE_SENHA }}
+          V_MOODLE_SENHA: ${{ vars.MOODLE_SENHA }}
+          S_AVA_USER_ID: ${{ secrets.AVA_USER_ID }}
+          V_AVA_USER_ID: ${{ vars.AVA_USER_ID }}
+          S_ATIVIDADES_URL: ${{ secrets.ATIVIDADES_URL }}
+          V_ATIVIDADES_URL: ${{ vars.ATIVIDADES_URL }}
+          S_AVA_SENHA: ${{ secrets.AVA_SENHA }}
+          V_AVA_SENHA: ${{ vars.AVA_SENHA }}
+        run: |
+          faltando=""
+          printf '%-16s | %-8s | %s\n' "NOME" "SECRETS" "VARIABLES"
+          for nome in MOODLE_USUARIO MOODLE_SENHA AVA_USER_ID ATIVIDADES_URL AVA_SENHA; do
+            s="S_$nome"; v="V_$nome"
+            if [ -n "${!s}" ]; then sf="OK"; else sf="vazio"; fi
+            if [ -n "${!v}" ]; then vf="OK"; else vf="vazio"; fi
+            printf '%-16s | %-8s | %s\n' "$nome" "$sf" "$vf"
+            if [ -z "${!s}" ] && [ "$nome" != "AVA_SENHA" ]; then faltando="$faltando $nome"; fi
+          done
+          if [ -n "$faltando" ]; then
+            echo "::error::Nao chegaram ao runner:$faltando"
+            echo "Se a coluna VARIABLES estiver OK, foram cadastrados na aba errada — o workflow le da aba Secrets."
+            exit 1
+          fi
+
       - name: Checkout do repositório
         uses: actions/checkout@v5
 
